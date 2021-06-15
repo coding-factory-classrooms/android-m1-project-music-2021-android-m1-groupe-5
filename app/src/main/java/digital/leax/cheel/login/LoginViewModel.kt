@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import digital.leax.cheel.api.ApiAuthTokenWrapper
 import digital.leax.cheel.api.ApiCredentials
 import digital.leax.cheel.api.MusicDBApi
+import digital.leax.cheel.utils.getToken
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -20,11 +21,13 @@ private const val TAG = "LoginViewModel"
 
 
 sealed class LoginViewModelState(
+    open val token : String = "",
     open val errorMessage: String = "",
     open val loginButtonEnable: Boolean = false
 ) {
     object Loading : LoginViewModelState()
-    object Success : LoginViewModelState()
+    data class Success(override val token: String) :
+        LoginViewModelState(token = token)
     data class UpdateLogin(override val loginButtonEnable: Boolean) :
         LoginViewModelState(loginButtonEnable = loginButtonEnable)
     data class Failure(override val errorMessage: String) :
@@ -63,8 +66,10 @@ class LoginViewModel : ViewModel() {
         state.value = LoginViewModelState.Loading
 
 
-//        val call = api.postAuth(ApiCredentials(username = "groupe5", password = "C1gbOcE0w5"))
-        val call = api.postAuth(ApiCredentials(username = login, password = password))
+//        val call = api.postAuth(ApiCredentials(username = login, password = password))
+        //FIXME ligne debug pour pas a avoir taper les creds
+        val call = api.postAuth(ApiCredentials(username = "groupe5", password = "C1gbOcE0w5"))
+
         call.enqueue(object : Callback<ApiAuthTokenWrapper> {
             override fun onResponse(
                 call: Call<ApiAuthTokenWrapper>,
@@ -74,7 +79,7 @@ class LoginViewModel : ViewModel() {
                 if (res == null){
                     state.value = LoginViewModelState.Failure("Invalid credential")
                 }else {
-                    state.value = LoginViewModelState.Success
+                    state.value = LoginViewModelState.Success(res.token)
                 }
             }
 

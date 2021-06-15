@@ -1,7 +1,6 @@
 package digital.leax.cheel.login
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import digital.leax.cheel.databinding.FragmentLoginBinding
+import digital.leax.cheel.utils.setToken
 
-private const val TAG = "MoviesApp"
+private const val TAG = "LoginFragment"
 
 class LoginFragment : Fragment() {
 
@@ -60,9 +60,10 @@ class LoginFragment : Fragment() {
 
     private fun updateUi(state: LoginViewModelState) {
         when (state) {
-            LoginViewModelState.Success -> {
+            is LoginViewModelState.Success -> {
                 binding.loginButton.isEnabled = state.loginButtonEnable
                 Toast.makeText(context, "GOOD", Toast.LENGTH_SHORT).show()
+                setToken(requireContext(),state.token)
                 goToMainApp()
             }
             is LoginViewModelState.Failure -> {

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cheel</string>
+    <string name="preference_file_key">CheelApp</string>
+    <string name="preference_token_key">ApiToken</string>
 </resources>
