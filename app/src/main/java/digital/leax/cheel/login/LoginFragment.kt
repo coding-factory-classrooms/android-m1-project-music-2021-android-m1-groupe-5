@@ -10,6 +10,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import digital.leax.cheel.databinding.FragmentLoginBinding
 import digital.leax.cheel.utils.setToken
 
@@ -77,7 +78,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToMainApp() {
-
+        val action =
+            LoginFragmentDirections.actionLoginFragmentToLibraryFragment()
+        findNavController().navigate(action)
     }
 
 }
