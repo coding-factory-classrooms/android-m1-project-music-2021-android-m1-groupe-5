@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#FFCB00</color>
+    <color name="colorPrimary">#cccccc</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">@color/wellow</color>
+    <color name="wellow">#FFCB00</color>
+    <color name="cgu">#58A5FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="error">#f5594E</color>
+    <color name="wellowPressed">#A6FFCB00</color>
+    <color name="whiteindark">#ffffff</color>
+    <color name="blackindark">#000000</color>
+    <color name="greyindark">#878787</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
+
 </resources>

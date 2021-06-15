@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_bottom_navigation"
+    app:startDestination="@id/player">
+    <fragment
+        android:id="@+id/player"
+        android:name="com.cheel.project_music.ui.main.player.Player"
+        android:label="player_fragment"
+        tools:layout="@layout/player_fragment" />
+    <fragment
+        android:id="@+id/bibliotheque"
+        android:name="com.cheel.project_music.ui.main.bibliotheque.Bibliotheque"
+        android:label="bibliotheque_fragment"
+        tools:layout="@layout/bibliotheque_fragment" />
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.cheel.project_music.ui.main.profile.Profile"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/playlist"
+        android:name="com.cheel.project_music.ui.main.playlist.Playlist"
+        android:label="playlist_fragment"
+        tools:layout="@layout/playlist_fragment" />
+</navigation>
