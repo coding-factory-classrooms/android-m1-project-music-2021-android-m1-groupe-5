@@ -23,9 +23,13 @@
     </fragment>
     <fragment
         android:id="@+id/playlistsFragment"
-        android:name="digital.leax.cheel.menu.PlaylistsFragment"
+        android:name="digital.leax.cheel.menu.playlist.PlaylistsFragment"
         android:label="fragment_playlists"
-        tools:layout="@layout/fragment_playlists" />
+        tools:layout="@layout/fragment_playlists" >
+        <action
+            android:id="@+id/action_playlistsFragment_to_songsListFragment"
+            app:destination="@id/songsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/libraryFragment"
         android:name="digital.leax.cheel.menu.library.LibraryFragment"

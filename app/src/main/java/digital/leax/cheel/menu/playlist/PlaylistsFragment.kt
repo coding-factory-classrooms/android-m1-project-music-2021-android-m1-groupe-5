@@ -1,4 +1,4 @@
-package digital.leax.cheel.menu.library
+package digital.leax.cheel.menu.playlist
 
 import android.os.Bundle
 import android.util.Log
@@ -10,52 +10,50 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import digital.leax.cheel.Artist
-import digital.leax.cheel.databinding.FragmentLibraryBinding
-import digital.leax.cheel.utils.getPlayList
+import digital.leax.cheel.databinding.FragmentPlaylistsBinding
 import digital.leax.cheel.utils.getToken
-import digital.leax.cheel.utils.setPlayList
+import retrofit2.Retrofit
 
+private const val TAG = "PlaylistsFragment"
 
-private const val TAG = "LibraryFragment"
+class PlaylistsFragment : Fragment() {
 
-class LibraryFragment : Fragment() {
+    private lateinit var binding: FragmentPlaylistsBinding
+    private lateinit var adapter: PlaylistsAdapter
+    private val model: PlaylistsViewModel by viewModels()
 
-    private lateinit var binding: FragmentLibraryBinding
-    private lateinit var adapter: LibraryAdapter
-    private val model: LibraryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLibraryBinding.inflate(inflater, container, false)
+        binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        adapter = LibraryAdapter(artists=  listOf(), clickListener =  { view ->
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState);
+
+        adapter = PlaylistsAdapter(artists=  listOf(), clickListener =  { view ->
             val artists: Artist = view.tag as Artist
             Log.i(TAG, "Artist= $artists")
             navigateToSongsList(artists)
         }, context = requireContext())
 
-//        Log.d(TAG, "onViewCreated: ${getPlayList(requireContext())}")
-
-        binding.libraryList.adapter = adapter
-        binding.libraryList.layoutManager = LinearLayoutManager(context)
+        binding.playlistList.adapter = adapter
+        binding.playlistList.layoutManager = LinearLayoutManager(context)
 
         model.getArtistsLiveData().observe(viewLifecycleOwner, { artist -> updateArtists(artist!!) })
 
-        getToken(requireContext())?.let { model.loadArtists(it) }
+        getToken(requireContext())?.let { model.loadArtists(it, requireContext()) }
     }
 
     private fun navigateToSongsList(artist : Artist) {
         val action =
-            LibraryFragmentDirections.actionLibraryFragmentToSongsListFragment(
+            PlaylistsFragmentDirections.actionPlaylistsFragmentToSongsListFragment(
                 artist = artist
             )
         findNavController().navigate(action)
@@ -64,5 +62,4 @@ class LibraryFragment : Fragment() {
     private fun updateArtists(artists: List<Artist>) {
         adapter.updateDataSet(artists)
     }
-
 }
