@@ -11,28 +11,14 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
+            android:id="@+id/action_loginFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/libraryFragment"
-        android:name="digital.leax.cheel.menu.LibraryFragment"
-        android:label="fragment_library"
-        tools:layout="@layout/fragment_library" />
-    <fragment
-        android:id="@+id/playerFragment"
-        android:name="digital.leax.cheel.menu.PlayerFragment"
-        android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
-    <fragment
-        android:id="@+id/playlistsFragment"
-        android:name="digital.leax.cheel.menu.PlaylistsFragment"
-        android:label="fragment_playlists"
-        tools:layout="@layout/fragment_playlists" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="digital.leax.cheel.menu.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/menuFragment"
+        android:name="digital.leax.cheel.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
 
 </navigation>

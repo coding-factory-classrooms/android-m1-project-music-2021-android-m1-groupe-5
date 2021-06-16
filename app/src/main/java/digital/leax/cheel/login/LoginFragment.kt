@@ -79,7 +79,7 @@ class LoginFragment : Fragment() {
 
     private fun goToMainApp() {
         val action =
-            LoginFragmentDirections.actionLoginFragmentToLibraryFragment()
+            LoginFragmentDirections.actionLoginFragmentToMenuFragment()
         findNavController().navigate(action)
     }
 
