@@ -2,21 +2,18 @@ package digital.leax.cheel.menu.songs
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
-import digital.leax.cheel.api.ApiArtists
 import digital.leax.cheel.databinding.FragmentSongsListBinding
-import digital.leax.cheel.menu.library.LibraryAdapter
-import digital.leax.cheel.menu.library.LibraryFragmentDirections
-import digital.leax.cheel.menu.library.LibraryViewModel
+import digital.leax.cheel.utils.getAlbumName
+import digital.leax.cheel.utils.getArtistName
 import digital.leax.cheel.utils.getToken
 
 
@@ -43,17 +40,19 @@ class SongsListFragment : Fragment() {
 
         val artist = args.artist
 
-        adapter = SongsAdapter(listOf()) { view ->
+        adapter = SongsAdapter(songs = listOf(), clickListener = { view ->
             val song: Song = view.tag as Song
             Log.i(TAG, "Song= $song")
             navigateToPlayer(song)
-        }
+        }, artist = artist)
 
         binding.songsList.adapter = adapter
         binding.songsList.layoutManager = LinearLayoutManager(context)
 
+        binding.albumTitle.text = getAlbumName(artist.name)
+        binding.artistAlbumName.text = getArtistName(artist.name)
+
         model.getSongsLiveData().observe(viewLifecycleOwner, { song -> updateSongs(song!!) })
-        model.getArtistLiveData().observe(viewLifecycleOwner, { artist -> updateArtist(artist) })
 
         getToken(requireContext())?.let { model.loadSongs(it, artist.id) }
 
@@ -68,12 +67,6 @@ class SongsListFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun updateArtist(artist: ApiArtists?) {
-        artist?.let {
-            adapter.albumUrl = artist.album_cover_url
-            adapter.notifyDataSetChanged();
-        }
-    }
 
     private fun updateSongs(songs: List<Song>) {
         adapter.updateDataSet(songs)
