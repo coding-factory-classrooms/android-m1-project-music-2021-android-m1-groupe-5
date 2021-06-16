@@ -1,6 +1,7 @@
 package digital.leax.cheel.menu.songs
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -10,7 +11,8 @@ import digital.leax.cheel.databinding.RowArtistBinding
 import digital.leax.cheel.databinding.RowSongsBinding
 
 class SongsAdapter(
-    private var songs: List<Song>
+    private var songs: List<Song>,
+    private val clickListener: View.OnClickListener
 ) :
     RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     class ViewHolder(val binding: RowSongsBinding) : RecyclerView.ViewHolder(binding.root)
@@ -31,6 +33,9 @@ class SongsAdapter(
 //            if (artist.album_cover_url.isNotBlank()) {
 //                Picasso.get().load(artist.album_cover_url).into(binding.artistCover)
 //            }
+
+            binding.root.tag = song
+            binding.root.setOnClickListener(clickListener)
         }
     }
 

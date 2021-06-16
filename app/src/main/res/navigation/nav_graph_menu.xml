@@ -7,9 +7,20 @@
 
     <fragment
         android:id="@+id/playerFragment"
-        android:name="digital.leax.cheel.menu.PlayerFragment"
+        android:name="digital.leax.cheel.menu.player.PlayerFragment"
         android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
+        tools:layout="@layout/fragment_player" >
+        <argument
+            android:name="song"
+            app:argType="digital.leax.cheel.Song"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="artist"
+            app:argType="digital.leax.cheel.Artist"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/playlistsFragment"
         android:name="digital.leax.cheel.menu.PlaylistsFragment"
@@ -37,5 +48,8 @@
         <argument
             android:name="artist"
             app:argType="digital.leax.cheel.Artist" />
+        <action
+            android:id="@+id/action_songsListFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
     </fragment>
 </navigation>

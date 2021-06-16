@@ -16,6 +16,7 @@ data class Artist(
     val album_cover_url: String
 ): Parcelable
 
+@Parcelize
 data class Song(
     val id : Int,
     val name: String,
@@ -23,4 +24,4 @@ data class Song(
     val duration: Int,
     val created_at: String,
     val artist: Int
-)
+): Parcelable
