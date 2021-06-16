@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import digital.leax.cheel.Artist
 import digital.leax.cheel.databinding.FragmentLibraryBinding
+import digital.leax.cheel.utils.getPlayList
 import digital.leax.cheel.utils.getToken
+import digital.leax.cheel.utils.setPlayList
 
 
 private const val TAG = "LibraryFragment"
@@ -35,11 +37,13 @@ class LibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = LibraryAdapter(listOf()) { view ->
+        adapter = LibraryAdapter(artists=  listOf(), clickListener =  { view ->
             val artists: Artist = view.tag as Artist
             Log.i(TAG, "Artist= $artists")
             navigateToSongsList(artists)
-        }
+        }, context = requireContext())
+
+        Log.d(TAG, "onViewCreated: ${getPlayList(requireContext())}")
 
         binding.libraryList.adapter = adapter
         binding.libraryList.layoutManager = LinearLayoutManager(context)

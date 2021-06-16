@@ -1,6 +1,7 @@
 package digital.leax.cheel.menu.library
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
 import digital.leax.cheel.databinding.RowArtistBinding
+import digital.leax.cheel.utils.setPlayList
 
 
 class LibraryAdapter(
     private var artists: List<Artist>,
-    private val clickListener: View.OnClickListener
-
+    private val clickListener: View.OnClickListener,
+    private val context: Context
 ) :
     RecyclerView.Adapter<LibraryAdapter.ViewHolder>() {
     class ViewHolder(val binding: RowArtistBinding) : RecyclerView.ViewHolder(binding.root)
@@ -36,6 +38,10 @@ class LibraryAdapter(
 
             binding.root.tag = artist
             binding.root.setOnClickListener(clickListener)
+
+            binding.addPlaylistBtn.setOnClickListener{
+                setPlayList(context, artist.name)
+            }
         }
     }
 
