@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
+import digital.leax.cheel.databinding.FragmentSongsListBinding
 import digital.leax.cheel.databinding.RowArtistBinding
 import digital.leax.cheel.databinding.RowSongsBinding
 
@@ -14,6 +15,7 @@ class SongsAdapter(
 ) :
     RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     class ViewHolder(val binding: RowSongsBinding) : RecyclerView.ViewHolder(binding.root)
+    var albumUrl:String? = null;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -23,14 +25,15 @@ class SongsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val song = songs[position]
-        with(holder) {
+        albumUrl?.let { Picasso.get().load(albumUrl).into(holder.binding.songCover) }
 
+
+        with(holder) {
             binding.songName.text = song.name
             binding.songDuration.text = song.duration.toString()
 
-//            if (artist.album_cover_url.isNotBlank()) {
-//                Picasso.get().load(artist.album_cover_url).into(binding.artistCover)
-//            }
+
+
         }
     }
 

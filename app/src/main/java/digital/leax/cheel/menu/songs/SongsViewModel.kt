@@ -21,6 +21,9 @@ class SongsViewModel : ViewModel(){
     private val songsLiveData = MutableLiveData<List<Song>>()
     fun getSongsLiveData(): LiveData<List<Song>> = songsLiveData
 
+    private val artistLiveData = MutableLiveData<ApiArtists>()
+    fun getArtistLiveData(): LiveData<ApiArtists> = artistLiveData
+
     private val api: MusicDBApi
 
     init {
@@ -41,6 +44,18 @@ class SongsViewModel : ViewModel(){
             .build()
 
         api = retrofit.create(MusicDBApi::class.java)
+    }
+
+    fun loadArtist(){
+        api.getArtistsById(2L).enqueue(object:Callback<ApiArtists>{
+            override fun onResponse(call: Call<ApiArtists>, response: Response<ApiArtists>) {
+                response.body()?.let { artistLiveData.value = it }
+            }
+
+            override fun onFailure(call: Call<ApiArtists>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     fun loadSongs(token : String, artistId : Int) {

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
+import digital.leax.cheel.api.ApiArtists
 import digital.leax.cheel.databinding.FragmentSongsListBinding
 import digital.leax.cheel.menu.library.LibraryAdapter
 import digital.leax.cheel.menu.library.LibraryViewModel
@@ -40,15 +41,25 @@ class SongsListFragment : Fragment() {
 
         val artist = args.artist
 
+
+
         adapter = SongsAdapter(listOf())
 
         binding.songsList.adapter = adapter
         binding.songsList.layoutManager = LinearLayoutManager(context)
 
         model.getSongsLiveData().observe(viewLifecycleOwner, { song -> updateSongs(song!!) })
+        model.getArtistLiveData().observe(viewLifecycleOwner, { artist -> updateArtist(artist) })
 
         getToken(requireContext())?.let { model.loadSongs(it, artist.id) }
 
+    }
+
+    private fun updateArtist(artist: ApiArtists?) {
+        artist?.let {
+            adapter.albumUrl = artist.album_cover_url
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private fun updateSongs(songs: List<Song>) {
