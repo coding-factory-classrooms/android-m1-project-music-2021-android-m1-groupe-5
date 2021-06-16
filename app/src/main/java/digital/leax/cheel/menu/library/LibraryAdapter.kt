@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
@@ -41,7 +42,9 @@ class LibraryAdapter(
 
             binding.addPlaylistBtn.setOnClickListener{
                 setPlayList(context, artist.name)
+                Toast.makeText(context, "Ajout dans la playlist de ${artist.name}", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 
