@@ -1,6 +1,8 @@
 package digital.leax.cheel.menu.player
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
 import digital.leax.cheel.databinding.FragmentPlayerBinding
+
 
 private const val TAG = "PlayerFragment"
 
@@ -65,8 +68,62 @@ class PlayerFragment : Fragment() {
         }
         binding.playerSongArtist.text = artist.name
         binding.playerSongTitle.text = song.name
+        binding.playerPlayBtn.setOnClickListener {
+            playAudio(song.file)
+        }
+        binding.playerStopBtn.setOnClickListener {
+            stopAudio()
+        }
+        binding.playerContinueBtn.setOnClickListener {
+            continueAudio()
+        }
     }
 
+    private var mediaPlayer: MediaPlayer? = null
+    private var playbackPosition = 0
+
+    private fun playAudio(url: String) {
+        if(mediaPlayer != null && mediaPlayer!!.isPlaying()) {
+            pauseAudio()
+            return
+        }
+
+        Log.d(TAG, "playAudio: PLAY")
+        killMediaPlayer()
+        mediaPlayer = MediaPlayer()
+        mediaPlayer!!.setDataSource(url)
+        mediaPlayer!!.prepare()
+        mediaPlayer!!.start()
+    }
+
+    private fun pauseAudio() {
+            playbackPosition = mediaPlayer!!.getCurrentPosition()
+            mediaPlayer!!.pause()
+    }
+
+    private fun stopAudio() {
+        if(mediaPlayer != null) {
+            mediaPlayer!!.stop()
+            playbackPosition = 0
+        }
+    }
+
+    private fun continueAudio() {
+        if(mediaPlayer != null && !mediaPlayer!!.isPlaying()) {
+            mediaPlayer!!.seekTo(playbackPosition)
+            mediaPlayer!!.start()
+        }
+    }
+
+        private fun killMediaPlayer() {
+        if (mediaPlayer != null) {
+            try {
+                mediaPlayer!!.release()
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 
 }
 
