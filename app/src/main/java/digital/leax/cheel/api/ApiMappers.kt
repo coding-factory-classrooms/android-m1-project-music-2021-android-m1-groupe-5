@@ -14,6 +14,19 @@ fun mapApiArtistWrapperToArtists(apiArtistsListWrapper: List<ApiArtists>): List<
     return list
 }
 
+fun mapApiArtistWrapperToArtistsInPref(res: List<ApiArtists>, playList: Set<String>?): List<Artist> {
+    val list = mutableListOf<Artist>()
+    for (apiArtist in res) {
+        if (playList != null) {
+            if (playList.contains(apiArtist.name)) {
+                list.add(mapApiArtist(apiArtist))
+            }
+        }
+    }
+    return list
+}
+
+
 fun mapApiSognsWrapperToSong(apiSongsListWrapper: List<ApiSong>): List<Song> {
     val list = mutableListOf<Song>()
     for (apiSongs in apiSongsListWrapper) {
