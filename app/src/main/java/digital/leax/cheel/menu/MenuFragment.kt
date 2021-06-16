@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import digital.leax.cheel.R
 import digital.leax.cheel.databinding.FragmentMenuBinding
 
 private const val TAG = "MenuFragment"
@@ -28,10 +31,17 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navHostFragment = Navigation.findNavController(view)
-        val bottomNavigationView = binding.bottomNavigationViewMenu
+        val nestedNavHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment_menu) as? NavHostFragment
 
-        bottomNavigationView.setupWithNavController(navHostFragment)
+        val navController = nestedNavHostFragment?.navController
+
+        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottom_navigation_view_menu)
+
+        if (navController != null) {
+            bottomNavigationView.setupWithNavController(navController)
+        } else {
+            throw RuntimeException("Controller not found")
+        }
 
     }
 
