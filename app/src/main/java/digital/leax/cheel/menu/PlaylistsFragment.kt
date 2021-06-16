@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import digital.leax.cheel.databinding.FragmentPlaylistsBinding
+import retrofit2.Retrofit
 
 private const val TAG = "PlaylistsFragment"
 
@@ -22,7 +23,9 @@ class PlaylistsFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState);
     }
 }

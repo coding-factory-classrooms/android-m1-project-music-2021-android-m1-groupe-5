@@ -13,3 +13,10 @@ data class ApiCredentials(
     val password: String
 )
 
+@JsonClass(generateAdapter = true)
+data class ApiArtists(
+    val name: String,
+    val genre_name: String,
+    val album_cover_url: String
+)
+
