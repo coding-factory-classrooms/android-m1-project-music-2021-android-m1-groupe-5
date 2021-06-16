@@ -35,7 +35,7 @@ class MenuFragment : Fragment() {
 
         val navController = nestedNavHostFragment?.navController
 
-        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottom_navigation_view_menu)
+        val bottomNavigationView = binding.bottomNavigationViewMenu
 
         if (navController != null) {
             bottomNavigationView.setupWithNavController(navController)
