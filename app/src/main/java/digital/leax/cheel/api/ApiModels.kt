@@ -1,5 +1,6 @@
 package digital.leax.cheel.api
 
+import android.net.Uri
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -19,4 +20,8 @@ data class ApiArtists(
     val genre_name: String,
     val album_cover_url: String
 )
+
+
+
+
 

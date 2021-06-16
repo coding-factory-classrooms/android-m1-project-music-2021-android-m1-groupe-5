@@ -11,4 +11,5 @@ interface MusicDBApi {
     fun postAuth(
         @Body cred: ApiCredentials
     ): Call<ApiAuthTokenWrapper>
+
 }
