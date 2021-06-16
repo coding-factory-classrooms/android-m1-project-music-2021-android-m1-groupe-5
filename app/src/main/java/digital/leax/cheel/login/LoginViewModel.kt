@@ -66,9 +66,9 @@ class LoginViewModel : ViewModel() {
         state.value = LoginViewModelState.Loading
 
 
-        val call = api.postAuth(ApiCredentials(username = login, password = password))
+//        val call = api.postAuth(ApiCredentials(username = login, password = password))
         //FIXME ligne debug pour pas a avoir taper les creds
-        //val call = api.postAuth(ApiCredentials(username = "groupe5", password = "C1gbOcE0w5"))
+        val call = api.postAuth(ApiCredentials(username = "groupe5", password = "C1gbOcE0w5"))
 
         call.enqueue(object : Callback<ApiAuthTokenWrapper> {
             override fun onResponse(

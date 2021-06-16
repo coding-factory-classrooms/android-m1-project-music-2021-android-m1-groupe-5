@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_playlists" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="digital.leax.cheel.menu.LibraryFragment"
+        android:name="digital.leax.cheel.menu.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
     <fragment
