@@ -27,7 +27,7 @@ private const val TAG = "LibraryViewModel"
 class LibraryViewModel : ViewModel(){
 
     private val artistsLiveData = MutableLiveData<List<Artist>>()
-    fun getMoviesLiveData(): LiveData<List<Artist>> = artistsLiveData
+    fun getArtistsLiveData(): LiveData<List<Artist>> = artistsLiveData
 
     private val api: MusicDBApi
 

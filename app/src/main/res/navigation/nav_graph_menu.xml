@@ -19,10 +19,23 @@
         android:id="@+id/libraryFragment"
         android:name="digital.leax.cheel.menu.library.LibraryFragment"
         android:label="fragment_library"
-        tools:layout="@layout/fragment_library" />
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/action_libraryFragment_to_songsListFragment"
+            app:destination="@id/songsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="digital.leax.cheel.menu.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/songsListFragment"
+        android:name="digital.leax.cheel.menu.songs.SongsListFragment"
+        android:label="fragment_songs_list"
+        tools:layout="@layout/fragment_songs_list" >
+        <argument
+            android:name="artist"
+            app:argType="digital.leax.cheel.Artist" />
+    </fragment>
 </navigation>

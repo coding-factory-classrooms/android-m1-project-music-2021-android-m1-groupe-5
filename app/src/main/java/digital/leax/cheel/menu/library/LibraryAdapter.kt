@@ -2,6 +2,7 @@ package digital.leax.cheel.menu.library
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -10,7 +11,9 @@ import digital.leax.cheel.databinding.RowArtistBinding
 
 
 class LibraryAdapter(
-    private var artits: List<Artist>,
+    private var artists: List<Artist>,
+    private val clickListener: View.OnClickListener
+
 ) :
     RecyclerView.Adapter<LibraryAdapter.ViewHolder>() {
     class ViewHolder(val binding: RowArtistBinding) : RecyclerView.ViewHolder(binding.root)
@@ -22,22 +25,24 @@ class LibraryAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val artist = artits[position]
+        val artist = artists[position]
         with(holder) {
-            binding.name.text = artist.name
-            binding.genre.text = artist.genre_name
+            binding.artistName.text = artist.name
+            binding.artistGenre.text = artist.genre_name
 
             if (artist.album_cover_url.isNotBlank()) {
-                Picasso.get().load(artist.album_cover_url).into(binding.cover)
+                Picasso.get().load(artist.album_cover_url).into(binding.artistCover)
             }
 
+            binding.root.tag = artist
+            binding.root.setOnClickListener(clickListener)
         }
     }
 
-    override fun getItemCount(): Int = artits.size
+    override fun getItemCount(): Int = artists.size
 
     fun updateDataSet(artists: List<Artist>) {
-        this.artits = artists
+        this.artists = artists
         notifyDataSetChanged()
     }
 }

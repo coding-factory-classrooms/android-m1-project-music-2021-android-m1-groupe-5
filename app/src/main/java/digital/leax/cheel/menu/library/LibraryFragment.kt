@@ -1,11 +1,13 @@
 package digital.leax.cheel.menu.library
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import digital.leax.cheel.Artist
 import digital.leax.cheel.databinding.FragmentLibraryBinding
@@ -20,7 +22,6 @@ class LibraryFragment : Fragment() {
     private lateinit var adapter: LibraryAdapter
     private val model: LibraryViewModel by viewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,14 +35,26 @@ class LibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = LibraryAdapter(listOf())
+        adapter = LibraryAdapter(listOf()) { view ->
+            val artists: Artist = view.tag as Artist
+            Log.i(TAG, "Artist= $artists")
+            navigateToSongsList(artists)
+        }
 
         binding.libraryList.adapter = adapter
         binding.libraryList.layoutManager = LinearLayoutManager(context)
 
-        model.getMoviesLiveData().observe(viewLifecycleOwner, { artist -> updateArtists(artist!!) })
+        model.getArtistsLiveData().observe(viewLifecycleOwner, { artist -> updateArtists(artist!!) })
 
         getToken(requireContext())?.let { model.loadArtists(it) }
+    }
+
+    private fun navigateToSongsList(artist : Artist) {
+        val action =
+            LibraryFragmentDirections.actionLibraryFragmentToSongsListFragment(
+                artist = artist
+            )
+        findNavController().navigate(action)
     }
 
     private fun updateArtists(artists: List<Artist>) {

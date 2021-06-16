@@ -22,6 +22,17 @@ data class ApiArtists(
     val album_cover_url: String
 )
 
+@JsonClass(generateAdapter = true)
+data class ApiSong(
+    val id : Int,
+    val name: String,
+    val file: String,
+    val duration: Int,
+    val created_at: String,
+    val artist: Int
+)
+
+
 
 
 
