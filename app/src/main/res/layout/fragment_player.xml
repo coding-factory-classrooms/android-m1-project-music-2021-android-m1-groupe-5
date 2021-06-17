@@ -103,7 +103,7 @@
             app:layout_constraintTop_toBottomOf="@+id/playerSongArtist" />
 
         <ImageButton
-            android:id="@+id/playerStopBtn"
+            android:id="@+id/nextBtn"
             android:layout_width="25dp"
             android:layout_height="27dp"
             android:layout_marginStart="32dp"
@@ -114,7 +114,7 @@
             app:layout_constraintTop_toTopOf="@+id/playerPlayPauseBtn" />
 
         <ImageButton
-            android:id="@+id/playerContinueBtn"
+            android:id="@+id/prevBtn"
             android:layout_width="25dp"
             android:layout_height="27dp"
             android:layout_marginEnd="32dp"
@@ -125,26 +125,26 @@
             app:layout_constraintTop_toTopOf="@+id/playerPlayPauseBtn" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/stopBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:backgroundTint="#00FFFFFF"
             android:src="@drawable/stopbtn"
-            app:layout_constraintBottom_toBottomOf="@+id/playerContinueBtn"
-            app:layout_constraintEnd_toStartOf="@+id/playerContinueBtn"
-            app:layout_constraintTop_toTopOf="@+id/playerContinueBtn" />
+            app:layout_constraintBottom_toBottomOf="@+id/prevBtn"
+            app:layout_constraintEnd_toStartOf="@+id/prevBtn"
+            app:layout_constraintTop_toTopOf="@+id/prevBtn" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/replayBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:backgroundTint="#00FFFFFF"
             android:src="@drawable/replaybtn"
-            app:layout_constraintBottom_toBottomOf="@+id/playerStopBtn"
-            app:layout_constraintStart_toEndOf="@+id/playerStopBtn"
-            app:layout_constraintTop_toTopOf="@+id/playerStopBtn" />
+            app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
+            app:layout_constraintStart_toEndOf="@+id/nextBtn"
+            app:layout_constraintTop_toTopOf="@+id/nextBtn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

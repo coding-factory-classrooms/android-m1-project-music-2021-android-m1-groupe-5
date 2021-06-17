@@ -78,8 +78,12 @@ class PlayerFragment : Fragment() {
         binding.playerPlayPauseBtn.setOnClickListener {
             playPauseAudio()
         }
-        binding.playerStopBtn.setOnClickListener {
+        binding.stopBtn.setOnClickListener {
             stopAudio()
+        }
+
+        binding.replayBtn.setOnClickListener {
+            replayAudio()
         }
     }
 
@@ -87,7 +91,7 @@ class PlayerFragment : Fragment() {
 
     private fun playPauseAudio() {
         if (mediaPlayer != null) {
-            if (mediaPlayer!!.isPlaying()) {
+            if (mediaPlayer!!.isPlaying) {
                 pauseAudio()
                 binding.playerPlayPauseBtn.setBackgroundResource(R.drawable.playbtn)
             } else {
@@ -103,7 +107,15 @@ class PlayerFragment : Fragment() {
 
     private fun stopAudio() {
         if (mediaPlayer != null) {
-            mediaPlayer!!.stop()
+            pauseAudio()
+            binding.playerPlayPauseBtn.setBackgroundResource(R.drawable.playbtn)
+            mediaPlayer!!.seekTo(0)
+        }
+    }
+
+    private fun replayAudio() {
+        if (mediaPlayer != null) {
+            mediaPlayer!!.seekTo(0)
         }
     }
 
