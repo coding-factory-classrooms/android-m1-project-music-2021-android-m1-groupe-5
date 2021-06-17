@@ -33,8 +33,8 @@ class PlayerViewModel : ViewModel() {
     fun getState(): LiveData<PlayerViewModelState> = state
 
     fun loadView(songs: List<SongArtist>?) {
+        Log.d(TAG, "loadView: $songs")
         state.value = PlayerViewModelState.Loading("Loading")
-
         if (songs == null) {
             Log.d(TAG, "onViewCreated: ARGS NULL")
             state.value = PlayerViewModelState.Failure("Aucune musique selectionné")
