@@ -107,7 +107,7 @@
             android:layout_width="25dp"
             android:layout_height="27dp"
             android:layout_marginStart="32dp"
-            android:background="@drawable/nextbtn"
+            android:background="@drawable/nexrbtn"
             android:text="STOP"
             app:layout_constraintBottom_toBottomOf="@+id/playerPlayPauseBtn"
             app:layout_constraintStart_toEndOf="@+id/playerPlayPauseBtn"
@@ -118,11 +118,33 @@
             android:layout_width="25dp"
             android:layout_height="27dp"
             android:layout_marginEnd="32dp"
-            android:background="@drawable/prevbtn"
+            android:background="@drawable/previousbtn"
             android:text="REPLAY"
             app:layout_constraintBottom_toBottomOf="@+id/playerPlayPauseBtn"
             app:layout_constraintEnd_toStartOf="@+id/playerPlayPauseBtn"
             app:layout_constraintTop_toTopOf="@+id/playerPlayPauseBtn" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/stopbtn"
+            app:layout_constraintBottom_toBottomOf="@+id/playerContinueBtn"
+            app:layout_constraintEnd_toStartOf="@+id/playerContinueBtn"
+            app:layout_constraintTop_toTopOf="@+id/playerContinueBtn" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/replaybtn"
+            app:layout_constraintBottom_toBottomOf="@+id/playerStopBtn"
+            app:layout_constraintStart_toEndOf="@+id/playerStopBtn"
+            app:layout_constraintTop_toTopOf="@+id/playerStopBtn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

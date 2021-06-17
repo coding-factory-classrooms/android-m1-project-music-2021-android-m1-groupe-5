@@ -92,7 +92,7 @@ class PlayerFragment : Fragment() {
                 binding.playerPlayPauseBtn.setBackgroundResource(R.drawable.playbtn)
             } else {
                 mediaPlayer!!.start()
-                binding.playerPlayPauseBtn.setBackgroundResource(R.drawable.pause)
+                binding.playerPlayPauseBtn.setBackgroundResource(R.drawable.pausebtn)
             }
         }
     }
