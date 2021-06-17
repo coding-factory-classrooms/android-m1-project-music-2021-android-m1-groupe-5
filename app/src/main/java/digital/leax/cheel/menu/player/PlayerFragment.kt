@@ -2,7 +2,6 @@ package digital.leax.cheel.menu.player
 
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
+import digital.leax.cheel.R
 import digital.leax.cheel.Song
 import digital.leax.cheel.databinding.FragmentPlayerBinding
 
@@ -66,52 +66,44 @@ class PlayerFragment : Fragment() {
         if (artist.album_cover_url.isNotBlank()) {
             Picasso.get().load(artist.album_cover_url).into(binding.playerSongImg)
         }
+
+        killMediaPlayer()
+        mediaPlayer = MediaPlayer()
+        mediaPlayer!!.setDataSource(song.file)
+        mediaPlayer!!.prepare()
+
         binding.playerSongArtist.text = artist.name
         binding.playerSongTitle.text = song.name
-        binding.playerPlayBtn.setOnClickListener {
-            playAudio(song.file)
+
+        binding.playerPlayPauseBtn.setOnClickListener {
+            playPauseAudio()
         }
         binding.playerStopBtn.setOnClickListener {
             stopAudio()
         }
-        binding.playerContinueBtn.setOnClickListener {
-            continueAudio()
-        }
     }
 
     private var mediaPlayer: MediaPlayer? = null
-    private var playbackPosition = 0
 
-    private fun playAudio(url: String) {
-        if(mediaPlayer != null && mediaPlayer!!.isPlaying()) {
-            pauseAudio()
-            return
+    private fun playPauseAudio() {
+        if (mediaPlayer != null) {
+            if (mediaPlayer!!.isPlaying()) {
+                pauseAudio()
+                binding.playerPlayPauseBtn.setBackgroundResource(R.drawable.playbtn)
+            } else {
+                mediaPlayer!!.start()
+                binding.playerPlayPauseBtn.setBackgroundResource(R.drawable.pause)
+            }
         }
-
-        Log.d(TAG, "playAudio: PLAY")
-        killMediaPlayer()
-        mediaPlayer = MediaPlayer()
-        mediaPlayer!!.setDataSource(url)
-        mediaPlayer!!.prepare()
-        mediaPlayer!!.start()
     }
 
     private fun pauseAudio() {
-            playbackPosition = mediaPlayer!!.getCurrentPosition()
-            mediaPlayer!!.pause()
+        mediaPlayer!!.pause()
     }
 
     private fun stopAudio() {
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer!!.stop()
-            playbackPosition = 0
-        }
-    }
-
-    private fun continueAudio() {
-        if(mediaPlayer != null && !mediaPlayer!!.isPlaying()) {
-            mediaPlayer!!.seekTo(playbackPosition)
-            mediaPlayer!!.start()
         }
     }
 

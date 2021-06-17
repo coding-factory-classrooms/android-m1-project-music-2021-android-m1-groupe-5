@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/informationText"
         android:layout_width="wrap_content"
@@ -87,10 +88,10 @@
             app:layout_constraintTop_toBottomOf="@+id/playerSongTitle" />
 
         <ImageButton
-            android:id="@+id/playerPlayBtn"
+            android:id="@+id/playerPlayPauseBtn"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:background="@drawable/playbtm"
+            android:background="@drawable/playbtn"
             android:backgroundTintMode="add"
             android:hapticFeedbackEnabled="true"
             android:text="Play"
@@ -108,9 +109,9 @@
             android:layout_marginStart="32dp"
             android:background="@drawable/nextbtn"
             android:text="STOP"
-            app:layout_constraintBottom_toBottomOf="@+id/playerPlayBtn"
-            app:layout_constraintStart_toEndOf="@+id/playerPlayBtn"
-            app:layout_constraintTop_toTopOf="@+id/playerPlayBtn" />
+            app:layout_constraintBottom_toBottomOf="@+id/playerPlayPauseBtn"
+            app:layout_constraintStart_toEndOf="@+id/playerPlayPauseBtn"
+            app:layout_constraintTop_toTopOf="@+id/playerPlayPauseBtn" />
 
         <ImageButton
             android:id="@+id/playerContinueBtn"
@@ -119,9 +120,9 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/prevbtn"
             android:text="REPLAY"
-            app:layout_constraintBottom_toBottomOf="@+id/playerPlayBtn"
-            app:layout_constraintEnd_toStartOf="@+id/playerPlayBtn"
-            app:layout_constraintTop_toTopOf="@+id/playerPlayBtn" />
+            app:layout_constraintBottom_toBottomOf="@+id/playerPlayPauseBtn"
+            app:layout_constraintEnd_toStartOf="@+id/playerPlayPauseBtn"
+            app:layout_constraintTop_toTopOf="@+id/playerPlayPauseBtn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
