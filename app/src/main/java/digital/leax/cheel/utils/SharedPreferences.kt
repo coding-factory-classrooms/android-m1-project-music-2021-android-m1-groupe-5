@@ -88,7 +88,7 @@ fun addPlaylistList(c: Context, playlistName: String) {
     }
 }
 
-fun setCurrentPlaylistSelected(c: Context, playlistName: String){
+fun setCurrentPlaylistSelected(c: Context, playlistName: String?){
     val sharedPref =
         c.getSharedPreferences(c.getString(R.string.preference_file_key), Context.MODE_PRIVATE)
     with(sharedPref.edit()) {
