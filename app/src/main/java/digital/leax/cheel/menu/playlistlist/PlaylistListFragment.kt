@@ -53,6 +53,8 @@ class PlaylistListFragment : Fragment() {
     }
 
     private fun navigateToPlaylist(playListName: String) {
+        Log.d(TAG, "navigateToPlaylist: $playListName")
+        
         val action =
             PlaylistListFragmentDirections.actionPlaylistListFragmentToPlaylistsFragment(
                 playlist = playListName

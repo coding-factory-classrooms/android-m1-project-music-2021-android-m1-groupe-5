@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import digital.leax.cheel.databinding.FragmentLoginBinding
+import digital.leax.cheel.utils.addPlaylistList
 import digital.leax.cheel.utils.setToken
 
 private const val TAG = "LoginFragment"
@@ -32,6 +33,10 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        addPlaylistList(requireContext(), "My playlist")
+        addPlaylistList(requireContext(), "BipBop")
+        addPlaylistList(requireContext(), "Help")
 
         model.getState().observe(viewLifecycleOwner, Observer { updateUi(it!!) })
 

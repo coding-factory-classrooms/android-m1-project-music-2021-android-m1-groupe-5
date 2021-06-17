@@ -52,7 +52,7 @@ class PlaylistsViewModel  : ViewModel(){
         api = retrofit.create(MusicDBApi::class.java)
     }
 
-    fun loadArtists(token : String, c : Context) {
+    fun loadArtists(token : String, c : Context, playlistName : String) {
         val call = api.getArtists(token = "Token $token")
 
         call.enqueue(object : Callback<List<ApiArtists>> {
@@ -64,7 +64,7 @@ class PlaylistsViewModel  : ViewModel(){
                 val res = response.body()
                 if (res != null){
                     Log.d(TAG, "onResponse: $res")
-                    val artists = mapApiArtistWrapperToArtistsInPref(res, getPlayList(c))
+                    val artists = mapApiArtistWrapperToArtistsInPref(res, getPlayList(c, playlistName))
                     artistsLiveData.value = artists
                 }
             }

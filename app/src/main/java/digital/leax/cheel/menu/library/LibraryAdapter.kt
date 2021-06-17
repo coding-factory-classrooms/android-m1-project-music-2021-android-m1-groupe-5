@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
 import digital.leax.cheel.databinding.RowArtistBinding
+import digital.leax.cheel.utils.getCurrentPlaylistSelected
 import digital.leax.cheel.utils.setPlayList
 
 
@@ -40,9 +41,21 @@ class LibraryAdapter(
             binding.root.tag = artist
             binding.root.setOnClickListener(clickListener)
 
-            binding.addPlaylistBtn.setOnClickListener{
-                setPlayList(context, artist.name)
-                Toast.makeText(context, "Ajout dans la playlist de ${artist.name}", Toast.LENGTH_SHORT).show()
+            binding.addPlaylistBtn.setOnClickListener {
+                val currentPlaylist = getCurrentPlaylistSelected(context)
+                if (!currentPlaylist.isNullOrBlank()) {
+                    setPlayList(context, currentPlaylist, artist.name)
+                    Toast.makeText(
+                        context,
+                        "Ajout dans la playlist de ${artist.name}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else{
+                    Toast.makeText(
+                        context,
+                        "Aucune playlist selectionné",
+                        Toast.LENGTH_SHORT).show()
+                }
             }
 
         }

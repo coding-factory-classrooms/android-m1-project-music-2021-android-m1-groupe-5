@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import digital.leax.cheel.databinding.RowPlaylistListBinding
+import digital.leax.cheel.utils.setCurrentPlaylistSelected
 
 class PlaylistListAdapter (
     private var playlistList: List<String>,
@@ -28,6 +29,10 @@ class PlaylistListAdapter (
 
             binding.root.tag = playlist
             binding.root.setOnClickListener(clickListener)
+
+            binding.currentPlaylistBtn.setOnClickListener {
+                setCurrentPlaylistSelected(context, playlist)
+            }
         }
     }
 

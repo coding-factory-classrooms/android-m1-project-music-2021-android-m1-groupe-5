@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import digital.leax.cheel.Artist
 import digital.leax.cheel.databinding.FragmentPlaylistsBinding
 import digital.leax.cheel.utils.getToken
-import retrofit2.Retrofit
 
 private const val TAG = "PlaylistsFragment"
 
@@ -21,6 +21,7 @@ class PlaylistsFragment : Fragment() {
     private lateinit var binding: FragmentPlaylistsBinding
     private lateinit var adapter: PlaylistsAdapter
     private val model: PlaylistsViewModel by viewModels()
+    private val args: PlaylistsFragmentArgs by navArgs()
 
 
     override fun onCreateView(
@@ -48,7 +49,7 @@ class PlaylistsFragment : Fragment() {
 
         model.getArtistsLiveData().observe(viewLifecycleOwner, { artist -> updateArtists(artist!!) })
 
-        getToken(requireContext())?.let { model.loadArtists(it, requireContext()) }
+        getToken(requireContext())?.let { model.loadArtists(it, requireContext(), args.playlist) }
     }
 
     private fun navigateToSongsList(artist : Artist) {
