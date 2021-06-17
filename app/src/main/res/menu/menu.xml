@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_library_music_24"
         android:title="Library" />
     <item
-        android:id="@+id/playlistsFragment"
+        android:id="@+id/playlistListFragment"
         android:icon="@drawable/ic_baseline_playlist_play_24"
         android:title="Playlists" />
     <item

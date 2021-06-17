@@ -35,7 +35,7 @@ class PlaylistsFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState)
 
         adapter = PlaylistsAdapter(artists=  listOf(), clickListener =  { view ->
             val artists: Artist = view.tag as Artist
