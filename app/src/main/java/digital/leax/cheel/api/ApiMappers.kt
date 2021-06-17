@@ -2,6 +2,7 @@ package digital.leax.cheel.api
 
 import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
+import digital.leax.cheel.SongArtist
 
 
 fun mapApiArtistWrapperToArtists(apiArtistsListWrapper: List<ApiArtists>): List<Artist> {
@@ -26,13 +27,54 @@ fun mapApiArtistWrapperToArtistsInPref(res: List<ApiArtists>, playList: Set<Stri
     return list
 }
 
-
-fun mapApiSognsWrapperToSong(apiSongsListWrapper: List<ApiSong>): List<Song> {
-    val list = mutableListOf<Song>()
+fun mapApiSongsWrapperToSong(apiSongsListWrapper: List<ApiSong>, artists: Artist): List<SongArtist> {
+    val list = mutableListOf<SongArtist>()
     for (apiSongs in apiSongsListWrapper) {
-        list.add(mapApiSong(apiSongs))
+        list.add(mapApiSongArtist(apiSongs, artists ))
     }
     return list
+}
+
+fun mapApiSongsWrapperToSongList(data: List<List<ApiSong>>, artists: List<Artist>): List<SongArtist> {
+    val listSongs = mutableListOf<SongArtist>()
+    for (list in data) {
+        for (song in list){
+            listSongs.add(mapApiSongArtist(song, artists))
+        }
+    }
+    return listSongs
+}
+
+fun mapApiSongArtist(song: ApiSong, artists: List<Artist>): SongArtist {
+    val artistId = song.artist
+    val artist = artists.find{it.id == artistId}
+    return SongArtist(
+        id = song.id,
+        name = song.name,
+        file = song.file,
+        duration = song.duration,
+        created_at = song.created_at,
+        artist = song.artist,
+        nameArtist= artist!!.name,
+        genre_name= artist!!.genre_name,
+        album_cover_url= artist!!.album_cover_url
+    )
+
+}
+
+fun mapApiSongArtist(song: ApiSong, artist: Artist): SongArtist {
+    return SongArtist(
+        id = song.id,
+        name = song.name,
+        file = song.file,
+        duration = song.duration,
+        created_at = song.created_at,
+        artist = song.artist,
+        nameArtist= artist.name,
+        genre_name= artist.genre_name,
+        album_cover_url= artist.album_cover_url
+    )
+
 }
 
 

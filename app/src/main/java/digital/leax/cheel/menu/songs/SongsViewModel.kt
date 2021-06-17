@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
+import digital.leax.cheel.SongArtist
 import digital.leax.cheel.api.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,8 +19,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 private const val TAG = "SongsViewModel"
 
 class SongsViewModel : ViewModel(){
-    private val songsLiveData = MutableLiveData<List<Song>>()
-    fun getSongsLiveData(): LiveData<List<Song>> = songsLiveData
+    private val songsLiveData = MutableLiveData<List<SongArtist>>()
+    fun getSongsLiveData(): LiveData<List<SongArtist>> = songsLiveData
 
     private val api: MusicDBApi
 
@@ -43,15 +44,15 @@ class SongsViewModel : ViewModel(){
         api = retrofit.create(MusicDBApi::class.java)
     }
 
-    fun loadSongs(token : String, artistId : Int) {
-        val call = api.getSongs(token = "Token $token", artistId)
+    fun loadSongs(token : String, artist : Artist) {
+        val call = api.getSongs(token = "Token $token", artist.id)
 
         call.enqueue(object : Callback<List<ApiSong>> {
             override fun onResponse(call: Call<List<ApiSong>>, response: Response<List<ApiSong>>) {
                 val res = response.body()
                 if (res != null){
                     Log.d(TAG, "onResponse: $res")
-                    val songs = mapApiSognsWrapperToSong(res)
+                    val songs = mapApiSongsWrapperToSong(res, artist)
                     songsLiveData.value = songs
                 }
             }
@@ -63,7 +64,7 @@ class SongsViewModel : ViewModel(){
         })
     }
 
-    fun getAllSongs() : List<Song>?{
+    fun getAllSongs() : List<SongArtist>?{
         return songsLiveData.value?.toList()
     }
 

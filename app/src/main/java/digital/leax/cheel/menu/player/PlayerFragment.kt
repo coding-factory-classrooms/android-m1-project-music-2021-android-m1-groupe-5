@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
 import digital.leax.cheel.R
 import digital.leax.cheel.Song
+import digital.leax.cheel.SongArtist
 import digital.leax.cheel.databinding.FragmentPlayerBinding
 
 
@@ -39,7 +40,7 @@ class PlayerFragment : Fragment() {
 
         model.getState().observe(viewLifecycleOwner, { updateUi(it!!) })
 
-        model.loadView(artist = args.artist, song = args.song?.toList())
+        model.loadView(songs = args.songs?.toList())
     }
 
     private fun updateUi(state: PlayerViewModelState) {
@@ -57,19 +58,16 @@ class PlayerFragment : Fragment() {
             is PlayerViewModelState.Success -> {
                 binding.informationText.isVisible = state.showInfoText
                 binding.songUi.isVisible = !state.showInfoText
-                setSongUi(state.artist, state.song)
+                setSongUi(state.songs)
             }
         }
     }
 
     private var index = 0
 
-    private fun setSongUi(artist: Artist, song: List<Song>) {
-        if (artist.album_cover_url.isNotBlank()) {
-            Picasso.get().load(artist.album_cover_url).into(binding.playerSongImg)
-        }
+    private fun setSongUi(songs: List<SongArtist>) {
 
-        setMediaPlayerSong(song, artist.name, index)
+        setMediaPlayerSong(songs, index)
 
         binding.playerPlayPauseBtn.setOnClickListener {
             playPauseAudio()
@@ -83,17 +81,17 @@ class PlayerFragment : Fragment() {
         }
 
         binding.nextBtn.setOnClickListener {
-            setMediaPlayerSong(song, artist.name, nextIndex(song))
+            setMediaPlayerSong(songs, nextIndex(songs))
             playPauseAudio()
         }
 
         binding.prevBtn.setOnClickListener {
-            setMediaPlayerSong(song, artist.name, prevIndex(song))
+            setMediaPlayerSong(songs, prevIndex(songs))
             playPauseAudio()
         }
     }
 
-    private fun nextIndex(song: List<Song>): Int {
+    private fun nextIndex(song: List<SongArtist>): Int {
         index++
         if (index >= song.size) {
             index = 0
@@ -101,7 +99,7 @@ class PlayerFragment : Fragment() {
         return index
     }
 
-    private fun prevIndex(song: List<Song>): Int {
+    private fun prevIndex(song: List<SongArtist>): Int {
         index--
         if (index < 0) {
             index = song.size-1
@@ -109,13 +107,17 @@ class PlayerFragment : Fragment() {
         return index
     }
 
-    private fun setMediaPlayerSong(song: List<Song>, artistName: String, index: Int) {
+    private fun setMediaPlayerSong(song: List<SongArtist>, index: Int) {
         killMediaPlayer()
         mediaPlayer = MediaPlayer()
         mediaPlayer!!.setDataSource(song[index].file)
         mediaPlayer!!.prepare()
 
-        binding.playerSongArtist.text = artistName
+        if (song[index].album_cover_url.isNotBlank()) {
+            Picasso.get().load(song[index].album_cover_url).into(binding.playerSongImg)
+        }
+
+        binding.playerSongArtist.text = song[index].nameArtist
         binding.playerSongTitle.text = song[index].name
     }
 

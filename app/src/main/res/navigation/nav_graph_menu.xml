@@ -11,14 +11,9 @@
         android:label="fragment_player"
         tools:layout="@layout/fragment_player" >
         <argument
-            android:name="song"
-            app:argType="digital.leax.cheel.Song[]"
+            android:name="songs"
+            app:argType="digital.leax.cheel.SongArtist[]"
             app:nullable="true" />
-        <argument
-            android:name="artist"
-            app:argType="digital.leax.cheel.Artist"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/playlistsFragment"
@@ -31,6 +26,9 @@
         <argument
             android:name="playlist"
             app:argType="string" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
     </fragment>
     <fragment
         android:id="@+id/libraryFragment"

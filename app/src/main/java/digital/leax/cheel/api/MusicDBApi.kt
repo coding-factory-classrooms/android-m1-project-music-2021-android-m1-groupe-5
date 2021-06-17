@@ -24,4 +24,8 @@ interface MusicDBApi {
     @GET("api/songs/")
     fun getSongs( @Header("Authorization") token : String, @Query("artist__id") artistId: Int): Call<List<ApiSong>>
 
+    @GET("api/songs/")
+    suspend fun getSongsCoroutine( @Header("Authorization") token : String, @Query("artist__id") artistId: Int): List<ApiSong>
+
+
 }
