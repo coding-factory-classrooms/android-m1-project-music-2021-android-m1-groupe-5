@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Cheel</string>
+    <string name="preference_file_key">CheelApp</string>
+    <string name="preference_token_key">ApiToken</string>
+    <string name="preference_playlistList_key">playlistList_key</string>
+    <string name="preference_currentPlaylistSelected_key">currentPlaylistSelected_key</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
