@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,7 +22,6 @@ private const val TAG = "SongsListFragment"
 
 class SongsListFragment : Fragment() {
 
-    private lateinit var allsongs: List<Song>
     private lateinit var binding: FragmentSongsListBinding
     private val args: SongsListFragmentArgs by navArgs()
     private lateinit var adapter: SongsAdapter
@@ -54,7 +54,7 @@ class SongsListFragment : Fragment() {
         binding.artistAlbumName.text = getArtistName(artist.name)
 
         binding.playAllBtn.setOnClickListener{
-            navigateToPlayerAll(allsongs)
+            navigateToPlayerAll(model.getAllSongs())
         }
 
         model.getSongsLiveData().observe(viewLifecycleOwner, { song -> updateSongs(song!!) })
@@ -72,17 +72,21 @@ class SongsListFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun navigateToPlayerAll(songs: List<Song>) {
-        val action =
-            SongsListFragmentDirections.actionSongsListFragmentToPlayerFragment(
-                song = songs.toTypedArray(),
-                artist = args.artist
-            )
-        findNavController().navigate(action)
+    private fun navigateToPlayerAll(songs: List<Song>?) {
+        if (songs != null){
+            val action =
+                SongsListFragmentDirections.actionSongsListFragmentToPlayerFragment(
+                    song = songs.toTypedArray(),
+                    artist = args.artist
+                )
+            findNavController().navigate(action)
+        }else{
+            Toast.makeText(context, "Aucun musique dans cet album", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun updateSongs(songs: List<Song>) {
-        allsongs = songs
         adapter.updateDataSet(songs)
     }
 

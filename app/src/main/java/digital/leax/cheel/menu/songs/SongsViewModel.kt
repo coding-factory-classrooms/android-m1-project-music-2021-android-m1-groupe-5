@@ -63,4 +63,8 @@ class SongsViewModel : ViewModel(){
         })
     }
 
+    fun getAllSongs() : List<Song>?{
+        return songsLiveData.value?.toList()
+    }
+
 }
