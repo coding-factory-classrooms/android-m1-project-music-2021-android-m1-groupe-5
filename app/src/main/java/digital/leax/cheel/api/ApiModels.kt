@@ -1,6 +1,8 @@
 package digital.leax.cheel.api
 
 import android.net.Uri
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -23,8 +25,9 @@ data class ApiArtists(
 )
 
 @JsonClass(generateAdapter = true)
+@Entity(tableName = "songs")
 data class ApiSong(
-    val id : Int,
+    @PrimaryKey val id : Int,
     val name: String,
     val file: String,
     val duration: Int,

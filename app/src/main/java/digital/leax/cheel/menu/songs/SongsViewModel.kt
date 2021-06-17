@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
 import digital.leax.cheel.api.*
@@ -14,10 +15,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
 private const val TAG = "SongsViewModel"
 
-class SongsViewModel : ViewModel(){
+class SongsViewModel @Inject constructor(
+    repository: SongsRepository
+) : ViewModel(){
     private val songsLiveData = MutableLiveData<List<Song>>()
     fun getSongsLiveData(): LiveData<List<Song>> = songsLiveData
 

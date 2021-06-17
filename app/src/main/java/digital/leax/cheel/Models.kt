@@ -3,6 +3,8 @@ package digital.leax.cheel
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 data class AuthToken(
     val token: String,
