@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import digital.leax.cheel.Artist
 import digital.leax.cheel.Song
+import digital.leax.cheel.SongArtist
 import digital.leax.cheel.databinding.RowSongsBinding
 
 class SongsAdapter(
-    private var songs: List<Song>,
+    private var songs: List<SongArtist>,
     private val clickListener: View.OnClickListener,
     private val artist: Artist
 ) :
@@ -42,7 +43,7 @@ class SongsAdapter(
 
     override fun getItemCount(): Int = songs.size
 
-    fun updateDataSet(songs: List<Song>) {
+    fun updateDataSet(songs: List<SongArtist>) {
         this.songs = songs
         notifyDataSetChanged()
     }

@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import digital.leax.cheel.Artist
+import digital.leax.cheel.Song
+import digital.leax.cheel.SongArtist
 import digital.leax.cheel.databinding.FragmentPlaylistsBinding
 import digital.leax.cheel.utils.getToken
 
@@ -38,7 +40,7 @@ class PlaylistsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = PlaylistsAdapter(artists=  listOf(), clickListener =  { view ->
+        adapter = PlaylistsAdapter(artists = listOf(), clickListener = { view ->
             val artists: Artist = view.tag as Artist
             Log.i(TAG, "Artist= $artists")
             navigateToSongsList(artists)
@@ -47,12 +49,36 @@ class PlaylistsFragment : Fragment() {
         binding.playlistList.adapter = adapter
         binding.playlistList.layoutManager = LinearLayoutManager(context)
 
-        model.getArtistsLiveData().observe(viewLifecycleOwner, { artist -> updateArtists(artist!!) })
+        model.getArtistsLiveData()
+            .observe(viewLifecycleOwner, { artist -> updateArtists(artist!!) })
 
-        getToken(requireContext())?.let { model.loadArtists(it, requireContext(), args.playlist) }
+        model.getSongsLiveData()
+            .observe(viewLifecycleOwner, { songs -> navigateToPlayer(songs!!) })
+
+        val token = getToken(requireContext())
+
+        if (token != null) {
+            model.loadArtists(token, requireContext(), args.playlist)
+            binding.playAllPlaylist.setOnClickListener {
+                model.loadSongsCoroutine(token)
+            }
+        }
+
     }
 
-    private fun navigateToSongsList(artist : Artist) {
+    private fun navigateToPlayer(songs: List<SongArtist>) {
+        Log.d(TAG, "navigateToPlayer: $songs")
+        Log.d(TAG, "navigateToPlayer: ${songs.toTypedArray()}")
+
+        val action =
+            PlaylistsFragmentDirections.actionPlaylistsFragmentToPlayerFragment(
+                songs = songs.toTypedArray()
+            )
+        findNavController().navigate(action)
+    }
+
+
+    private fun navigateToSongsList(artist: Artist) {
         val action =
             PlaylistsFragmentDirections.actionPlaylistsFragmentToSongsListFragment(
                 artist = artist
@@ -61,6 +87,10 @@ class PlaylistsFragment : Fragment() {
     }
 
     private fun updateArtists(artists: List<Artist>) {
+        val token = getToken(requireContext())
+        if (token != null) {
+            model.setArtist(artists)
+        }
         adapter.updateDataSet(artists)
     }
 }

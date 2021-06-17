@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import digital.leax.cheel.Song
+import digital.leax.cheel.SongArtist
 import digital.leax.cheel.databinding.FragmentSongsListBinding
 import digital.leax.cheel.utils.getAlbumName
 import digital.leax.cheel.utils.getArtistName
@@ -42,7 +43,7 @@ class SongsListFragment : Fragment() {
         val artist = args.artist
 
         adapter = SongsAdapter(songs = listOf(), clickListener = { view ->
-            val song: Song = view.tag as Song
+            val song: SongArtist = view.tag as SongArtist
             Log.i(TAG, "Song= $song")
             navigateToPlayer(song)
         }, artist = artist)
@@ -59,25 +60,23 @@ class SongsListFragment : Fragment() {
 
         model.getSongsLiveData().observe(viewLifecycleOwner, { song -> updateSongs(song!!) })
 
-        getToken(requireContext())?.let { model.loadSongs(it, artist.id) }
+        getToken(requireContext())?.let { model.loadSongs(it, artist) }
 
     }
 
-    private fun navigateToPlayer(song: Song) {
+    private fun navigateToPlayer(song: SongArtist) {
         val action =
             SongsListFragmentDirections.actionSongsListFragmentToPlayerFragment(
-                song = arrayOf(song),
-                artist = args.artist
+                songs = arrayOf(song),
             )
         findNavController().navigate(action)
     }
 
-    private fun navigateToPlayerAll(songs: List<Song>?) {
+    private fun navigateToPlayerAll(songs: List<SongArtist>?) {
         if (songs != null){
             val action =
                 SongsListFragmentDirections.actionSongsListFragmentToPlayerFragment(
-                    song = songs.toTypedArray(),
-                    artist = args.artist
+                    songs = songs.toTypedArray(),
                 )
             findNavController().navigate(action)
         }else{
@@ -86,7 +85,7 @@ class SongsListFragment : Fragment() {
 
     }
 
-    private fun updateSongs(songs: List<Song>) {
+    private fun updateSongs(songs: List<SongArtist>) {
         adapter.updateDataSet(songs)
     }
 
