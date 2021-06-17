@@ -39,7 +39,7 @@ class PlayerFragment : Fragment() {
 
         model.getState().observe(viewLifecycleOwner, { updateUi(it!!) })
 
-        model.loadView(artist = args.artist, song = args.song)
+        model.loadView(artist = args.artist, song = args.song?.toList())
     }
 
     private fun updateUi(state: PlayerViewModelState) {
@@ -62,18 +62,14 @@ class PlayerFragment : Fragment() {
         }
     }
 
-    private fun setSongUi(artist: Artist, song: Song) {
+    private var index = 0
+
+    private fun setSongUi(artist: Artist, song: List<Song>) {
         if (artist.album_cover_url.isNotBlank()) {
             Picasso.get().load(artist.album_cover_url).into(binding.playerSongImg)
         }
 
-        killMediaPlayer()
-        mediaPlayer = MediaPlayer()
-        mediaPlayer!!.setDataSource(song.file)
-        mediaPlayer!!.prepare()
-
-        binding.playerSongArtist.text = artist.name
-        binding.playerSongTitle.text = song.name
+        setMediaPlayerSong(song, artist.name, index)
 
         binding.playerPlayPauseBtn.setOnClickListener {
             playPauseAudio()
@@ -85,6 +81,42 @@ class PlayerFragment : Fragment() {
         binding.replayBtn.setOnClickListener {
             replayAudio()
         }
+
+        binding.nextBtn.setOnClickListener {
+            setMediaPlayerSong(song, artist.name, nextIndex(song))
+            playPauseAudio()
+        }
+
+        binding.prevBtn.setOnClickListener {
+            setMediaPlayerSong(song, artist.name, prevIndex(song))
+            playPauseAudio()
+        }
+    }
+
+    private fun nextIndex(song: List<Song>): Int {
+        index++
+        if (index >= song.size) {
+            index = 0
+        }
+        return index
+    }
+
+    private fun prevIndex(song: List<Song>): Int {
+        index--
+        if (index < 0) {
+            index = song.size-1
+        }
+        return index
+    }
+
+    private fun setMediaPlayerSong(song: List<Song>, artistName: String, index: Int) {
+        killMediaPlayer()
+        mediaPlayer = MediaPlayer()
+        mediaPlayer!!.setDataSource(song[index].file)
+        mediaPlayer!!.prepare()
+
+        binding.playerSongArtist.text = artistName
+        binding.playerSongTitle.text = song[index].name
     }
 
     private var mediaPlayer: MediaPlayer? = null

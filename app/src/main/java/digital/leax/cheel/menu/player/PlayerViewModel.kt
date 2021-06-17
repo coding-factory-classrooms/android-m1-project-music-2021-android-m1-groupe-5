@@ -13,10 +13,10 @@ sealed class PlayerViewModelState(
     open val infoText: String = "",
     open val showInfoText: Boolean = false,
     open val artist: Artist?,
-    open val song: Song?,
+    open val song: List<Song>?,
 ) {
 
-    data class Success(override val artist: Artist, override val song: Song) :
+    data class Success(override val artist: Artist, override val song: List<Song>) :
         PlayerViewModelState("", false, artist, song)
 
     data class Loading(override val infoText: String) :
@@ -32,7 +32,7 @@ class PlayerViewModel : ViewModel() {
     private val state = MutableLiveData<PlayerViewModelState>()
     fun getState(): LiveData<PlayerViewModelState> = state
 
-    fun loadView(song: Song?, artist: Artist?) {
+    fun loadView(song: List<Song>?, artist: Artist?) {
         state.value = PlayerViewModelState.Loading("Loading")
 
         if (artist == null || song == null) {

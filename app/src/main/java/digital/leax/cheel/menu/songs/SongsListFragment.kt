@@ -21,6 +21,7 @@ private const val TAG = "SongsListFragment"
 
 class SongsListFragment : Fragment() {
 
+    private lateinit var allsongs: List<Song>
     private lateinit var binding: FragmentSongsListBinding
     private val args: SongsListFragmentArgs by navArgs()
     private lateinit var adapter: SongsAdapter
@@ -52,6 +53,10 @@ class SongsListFragment : Fragment() {
         binding.albumTitle.text = getAlbumName(artist.name)
         binding.artistAlbumName.text = getArtistName(artist.name)
 
+        binding.playAllBtn.setOnClickListener{
+            navigateToPlayerAll(allsongs)
+        }
+
         model.getSongsLiveData().observe(viewLifecycleOwner, { song -> updateSongs(song!!) })
 
         getToken(requireContext())?.let { model.loadSongs(it, artist.id) }
@@ -61,14 +66,23 @@ class SongsListFragment : Fragment() {
     private fun navigateToPlayer(song: Song) {
         val action =
             SongsListFragmentDirections.actionSongsListFragmentToPlayerFragment(
-                song = song,
+                song = arrayOf(song),
                 artist = args.artist
             )
         findNavController().navigate(action)
     }
 
+    private fun navigateToPlayerAll(songs: List<Song>) {
+        val action =
+            SongsListFragmentDirections.actionSongsListFragmentToPlayerFragment(
+                song = songs.toTypedArray(),
+                artist = args.artist
+            )
+        findNavController().navigate(action)
+    }
 
     private fun updateSongs(songs: List<Song>) {
+        allsongs = songs
         adapter.updateDataSet(songs)
     }
 
